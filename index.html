@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mrs. Worldbride Tour</title>
+<meta name="description" content="Mrs. Worldbride: The Final World Tour. Haylee's bachelorette, Santa Barbara, April 16–18, 2027.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Yellowtail&family=Space+Mono:wght@400;700&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --black: #07050a;
+    --ink: #120c18;
+    --pink: #ff2d95;
+    --pink-hot: #ff5fb3;
+    --pink-glow: rgba(255, 45, 149, .65);
+    --silver: #d9dde3;
+    --chrome: linear-gradient(180deg, #ffffff 0%, #e9ecf1 28%, #8d939c 50%, #f4f6f9 52%, #b7bcc4 75%, #ffffff 100%);
+    --holo: linear-gradient(110deg, #ffffff 0%, #ffc3e6 18%, #b9f3ff 34%, #e9e3ff 50%, #ffffff 62%, #ffb3dc 78%, #c9fff1 92%, #ffffff 100%);
+    --gold: #ffd36b;
+    --text: #f5eef7;
+    --muted: #b9a9c2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--black);
+    background-image:
+      radial-gradient(circle at 50% -10%, rgba(255,45,149,.35), transparent 55%),
+      radial-gradient(1px 1px at 12% 22%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 72% 12%, #ffc3e6 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 38% 64%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 48%, #b9f3ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 22% 86%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 62% 92%, #ffc3e6 50%, transparent 51%);
+    background-size: 100% 100%, 220px 220px, 260px 260px, 300px 300px, 240px 240px, 280px 280px, 320px 320px;
+    color: var(--text);
+    font-family: "Archivo", system-ui, sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font: inherit; cursor: pointer; }
+
+  /* ================= COVER ================= */
+  .cover { padding: 24px 16px 20px; text-align: center; }
+  .cover-art {
+    position: relative; max-width: 600px; margin: 0 auto; border-radius: 6px; overflow: hidden;
+    box-shadow: 0 0 0 3px #0b060e, 0 0 0 6px #c9ced6, 0 0 0 7px #fff, 0 0 60px 6px var(--pink-glow);
+    animation: rise .8s cubic-bezier(.2,1,.3,1) both;
+  }
+  .cover-art img { display: block; width: 100%; height: auto; }
+  /* holographic sheen sweeping across the poster */
+  .cover-art::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
+    background: linear-gradient(115deg, transparent 35%, rgba(255,195,230,.35) 45%, rgba(185,243,255,.35) 50%, rgba(255,255,255,.4) 53%, transparent 62%);
+    background-size: 300% 100%; animation: sheen 5s ease-in-out infinite;
+  }
+  @keyframes sheen { 0% { background-position: 150% 0; } 60%, 100% { background-position: -50% 0; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px) scale(.98); } }
+
+  .datebar {
+    padding: 10px 12px; border-radius: 4px;
+    background: var(--holo); background-size: 200% 100%; animation: holo 6s linear infinite;
+    color: var(--black); font-family: "Anton", sans-serif; font-size: clamp(16px, 4.8vw, 24px); letter-spacing: .12em; text-transform: uppercase;
+  }
+  @keyframes holo { to { background-position: 200% 0; } }
+
+  .countdown { display: flex; justify-content: center; align-items: stretch; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .countdown .lbl { align-self: center; font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .24em; color: var(--silver); text-transform: uppercase; width: 100%; }
+  .cd { min-width: 64px; padding: 6px 6px 4px; border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.45); border-radius: 4px; }
+  .cd b { display: block; font-family: "Anton", sans-serif; font-size: 30px; font-weight: 400; line-height: 1.1; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 0 10px var(--pink-glow); }
+  .cd small { font-family: "Space Mono", monospace; font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+
+  /* clickable ADMIT ONE ticket on the poster (bottom-left corner of the art) */
+  .ticket-hotspot {
+    position: absolute; left: .5%; top: 85.6%; width: 28%; height: 13.8%; z-index: 2;
+    border-radius: 6px; transform: rotate(-2deg);
+    animation: ticket-pulse 2.2s ease-in-out infinite;
+  }
+  .ticket-hotspot:hover, .ticket-hotspot:focus-visible {
+    outline: none; animation: none;
+    box-shadow: 0 0 0 3px #fff, 0 0 28px 8px var(--pink);
+    background: rgba(255,255,255,.12);
+  }
+  @keyframes ticket-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,45,149,0); }
+    50% { box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 0 26px 6px var(--pink-glow); }
+  }
+  .tap-hint {
+    margin-top: 18px; font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--silver);
+  }
+  .tap-hint b { color: var(--pink-hot); }
+
+  /* two views: poster cover, then the tour page */
+  body:not(.on-tour) .tour-view { display: none; }
+  body.on-tour .cover { display: none; }
+  .tour-top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px;
+    max-width: 792px; margin: 0 auto; padding: 14px 16px;
+    background: rgba(7,5,10,.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 1px 0 rgba(255,255,255,.12);
+  }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tabs a {
+    font-family: "Anton", sans-serif; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+    color: #fff; padding: 8px 14px; border-radius: 4px; border: 2px solid rgba(255,255,255,.28); transition: all .2s;
+  }
+  .tabs a:hover, .tabs a:focus-visible { border-color: var(--pink); outline: none; }
+  .tabs a[aria-current="page"] { border-color: #fff; background: rgba(255,255,255,.12); }
+  .tabs a.rsvp-link { background: linear-gradient(180deg, #ff5fb3, #ff2d95 55%, #c4106a); border-color: #fff; box-shadow: 0 0 18px var(--pink-glow); }
+  .tabs a.rsvp-link:hover, .tabs a.rsvp-link:focus-visible { transform: scale(1.04); }
+  .back {
+    font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--silver); text-decoration: none; padding: 6px 2px;
+  }
+  .back:hover, .back:focus-visible { color: var(--pink-hot); outline: none; }
+  .tour-info { text-align: center; margin: -6px 0 30px; }
+
+  /* ================= TOUR INFO PAGE ================= */
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .fact {
+    position: relative; padding: 20px 20px 18px; border-radius: 10px;
+    background: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border: 1px solid rgba(255,255,255,.18);
+  }
+  .fact::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; border-radius: 3px; background: var(--pink); }
+  .fact small { font-family: "Space Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: .24em; color: var(--pink-hot); }
+  .fact h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: .03em; line-height: 1.1; text-transform: uppercase; color: #fff; margin: 4px 0 6px; }
+  .fact p { font-size: 14px; color: #d8cddd; }
+  .fact ul { list-style: none; font-size: 14px; color: #d8cddd; }
+  .fact li { padding: 5px 0; border-bottom: 1px dashed rgba(255,255,255,.14); }
+  .fact li:last-child { border-bottom: 0; }
+  .fact li b { color: #fff; font-weight: 600; }
+  .fact.wide { grid-column: 1 / -1; }
+  .fact .address {
+    display: inline-block; margin: 2px 0 10px; padding: 6px 12px; border-radius: 6px;
+    background: rgba(255,45,149,.16); border: 1px dashed var(--pink); color: #fff; font-weight: 600;
+  }
+
+  .sub-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 44px 0 16px; }
+  .sub-head h2 { font-size: clamp(34px, 9vw, 52px); white-space: nowrap; }
+  .sub-head span { font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; }
+
+  .pack {
+    background: #f4f1ea; color: #15101a; border-radius: 4px; padding: 22px 20px 18px;
+    box-shadow: 0 0 0 1px #fff, 0 20px 40px -20px var(--pink-glow);
+  }
+  .pack-progress { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .pack-bar { flex: 1; height: 10px; border-radius: 99px; background: #e5dcd8; overflow: hidden; }
+  .pack-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ff2d95, #ffb3dc); transition: width .3s; }
+  .pack-count { font-family: "Space Mono", monospace; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .pack-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 26px; }
+  .pack-cols h4 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 18px; letter-spacing: .1em; color: #c4106a; margin: 14px 0 4px; }
+  .pack-cols label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; font-size: 15px; cursor: pointer; border-bottom: 1px dashed #d9cfd6; }
+  .pack-cols input {
+    appearance: none; -webkit-appearance: none; flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px;
+    border: 2px solid #15101a; border-radius: 4px; display: grid; place-content: center; cursor: pointer;
+  }
+  .pack-cols input:checked { background: #ff2d95; border-color: #ff2d95; }
+  .pack-cols input:checked::after { content: "✓"; color: #fff; font-size: 13px; font-weight: 700; }
+  .pack-cols input:focus-visible { outline: 2px solid #ff2d95; outline-offset: 2px; }
+  .pack-cols input:checked + span { text-decoration: line-through; color: #8b7f88; }
+  .pack-note { font-family: "Space Mono", monospace; font-size: 11px; color: #6c5f73; margin-top: 12px; }
+
+  .rsvp-card {
+    margin-top: 44px; text-align: center; padding: 34px 22px 30px; border-radius: 14px; position: relative; overflow: hidden;
+    background: var(--holo); background-size: 200% 100%; animation: holo 6s linear infinite; color: var(--black);
+    box-shadow: 0 0 0 2px #fff, 0 0 40px var(--pink-glow);
+  }
+  .rsvp-card small { font-family: "Space Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: .3em; }
+  .rsvp-card h2 { font-family: "Anton", sans-serif; font-weight: 400; font-size: clamp(38px, 11vw, 64px); line-height: 1; text-transform: uppercase; margin: 6px 0 10px; }
+  .rsvp-card p { max-width: 440px; margin: 0 auto; font-size: 15px; }
+  .rsvp-btn {
+    display: inline-block; margin-top: 20px; padding: 14px 34px; border-radius: 999px; text-decoration: none;
+    font-family: "Anton", sans-serif; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; color: #fff;
+    background: #07050a; border: 2px solid #07050a; transition: transform .15s, background .2s;
+  }
+  .rsvp-btn:hover, .rsvp-btn:focus-visible { transform: scale(1.05); background: #ff2d95; outline: none; }
+
+  /* ================= RSVP PAGE ================= */
+  .rsvp-form { display: grid; gap: 18px; }
+  .q-group {
+    border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 18px 18px 6px;
+    background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+  }
+  .q-group legend {
+    font-family: "Anton", sans-serif; font-size: 20px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 0 10px; margin-left: -6px; color: #fff;
+  }
+  .q { display: block; margin-bottom: 18px; }
+  .q-label { display: block; font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+  .q-label i { font-style: normal; color: var(--pink-hot); }
+  .q-help { display: block; font-size: 13px; color: var(--muted); margin: -4px 0 8px; }
+  .q input[type=text], .q input[type=tel], .q input[type=email], .q textarea {
+    width: 100%; font: inherit; font-size: 16px; color: #fff;
+    background: rgba(0,0,0,.45); border: 1.5px solid rgba(255,255,255,.25); border-radius: 8px; padding: 12px 14px;
+  }
+  .q textarea { min-height: 92px; resize: vertical; }
+  .q input:focus, .q textarea:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,45,149,.3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chip span {
+    display: inline-block; padding: 10px 14px; border-radius: 999px; cursor: pointer; font-size: 14px;
+    border: 1.5px solid rgba(255,255,255,.3); background: rgba(0,0,0,.35); color: #fff; transition: all .15s;
+  }
+  .chip:hover span { border-color: var(--pink); }
+  .chip input:checked + span { background: var(--pink); border-color: #fff; box-shadow: 0 0 16px var(--pink-glow); }
+  .chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+  .q.invalid .q-label { color: var(--pink-hot); }
+  .q.invalid input, .q.invalid textarea { border-color: var(--pink); }
+  .q-err { display: none; font-size: 13px; color: var(--pink-hot); margin-top: 6px; }
+  .q.invalid .q-err { display: block; }
+  .logistics[hidden] { display: none; }
+  .rsvp-submit {
+    justify-self: center; margin-top: 4px; padding: 15px 40px; border-radius: 999px; border: 2px solid #fff;
+    font-family: "Anton", sans-serif; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; color: #fff;
+    background: linear-gradient(180deg, #ff5fb3, #ff2d95 55%, #c4106a); box-shadow: 0 0 0 4px rgba(255,45,149,.3), 0 0 30px var(--pink-glow);
+    transition: transform .15s;
+  }
+  .rsvp-submit:hover, .rsvp-submit:focus-visible { transform: scale(1.04); outline: none; }
+  .rsvp-submit:disabled { opacity: .6; cursor: wait; transform: none; }
+  .form-msg { text-align: center; font-size: 14px; color: var(--pink-hot); min-height: 1em; }
+  .rsvp-done {
+    text-align: center; padding: 40px 22px 34px; border-radius: 16px;
+    background: var(--holo); background-size: 200% 100%; animation: holo 6s linear infinite; color: var(--black);
+    box-shadow: 0 0 0 2px #fff, 0 0 40px var(--pink-glow);
+  }
+  .rsvp-done small { font-family: "Space Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: .3em; }
+  .rsvp-done h2 { font-family: "Anton", sans-serif; font-weight: 400; font-size: clamp(38px, 11vw, 64px); line-height: 1; text-transform: uppercase; margin: 8px 0 12px; }
+  .rsvp-done p { max-width: 440px; margin: 0 auto; font-size: 15px; }
+  .rsvp-done .rsvp-btn { margin-top: 20px; }
+  .page > section:first-child { padding-top: 18px; }
+
+  .chrome {
+    font-family: "Anton", Impact, sans-serif; text-transform: uppercase; line-height: .86; letter-spacing: .01em;
+    background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 3px 0 #ff2d95) drop-shadow(0 6px 0 #5a0b33) drop-shadow(0 0 22px rgba(255,45,149,.6));
+  }
+
+  /* ================= TOUR DATES ================= */
+  section { padding: 50px 16px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .sec-head { text-align: center; margin-bottom: 26px; }
+  .sec-head h2 { font-size: clamp(46px, 13vw, 80px); }
+  .sec-head p { font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+  .bus-lane { height: 44px; position: relative; overflow: hidden; margin-bottom: 8px; border-bottom: 2px dashed rgba(255,255,255,.18); }
+  .bus { position: absolute; bottom: 2px; width: 120px; animation: drive 9s linear infinite; }
+  @keyframes drive { from { left: -130px; } to { left: 100%; } }
+
+  .dates { list-style: none; border-top: 2px solid #fff; }
+  .date-row { border-bottom: 1px solid rgba(255,255,255,.22); }
+  .date-btn {
+    width: 100%; display: grid; grid-template-columns: 78px 1fr auto; align-items: center; gap: 14px;
+    padding: 18px 6px; background: none; border: 0; color: inherit; text-align: left; position: relative;
+    transition: background .2s;
+  }
+  .date-btn:hover, .date-btn:focus-visible { background: linear-gradient(90deg, rgba(255,45,149,.22), transparent 80%); outline: none; }
+  .d-day { text-align: center; line-height: 1; }
+  .d-day small { display: block; font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .2em; color: var(--pink-hot); font-weight: 700; }
+  .d-day b { display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 44px; color: #fff; margin-top: 2px; }
+  .d-day i { display: block; font-style: normal; font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .2em; color: var(--silver); margin-top: 4px; }
+  .d-info h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: clamp(24px, 6vw, 34px); letter-spacing: .03em; line-height: 1.05; text-transform: uppercase;
+    background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .d-info p { font-family: "Space Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .d-cta {
+    font-family: "Anton", sans-serif; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+    padding: 8px 14px; border: 2px solid var(--pink); color: #fff; border-radius: 4px; background: rgba(255,45,149,.12);
+  }
+  .date-btn:hover .d-cta { background: var(--pink); }
+  .sold {
+    position: absolute; right: 120px; top: 50%; transform: translateY(-50%) rotate(-10deg);
+    font-family: "Anton", sans-serif; font-size: 13px; letter-spacing: .16em; color: var(--pink);
+    border: 2px solid var(--pink); padding: 1px 8px; opacity: .85; pointer-events: none;
+  }
+
+  /* ================= TOUR RIDER ================= */
+  .rider {
+    background: #f4f1ea; color: #15101a; border-radius: 4px; padding: 26px 22px 22px; position: relative;
+    font-family: "Space Mono", monospace; box-shadow: 0 0 0 1px #fff, 0 20px 40px -20px var(--pink-glow);
+    transform: rotate(-.6deg);
+  }
+  .rider::before { content: ""; position: absolute; top: -10px; left: 50%; width: 90px; height: 22px; transform: translateX(-50%) rotate(2deg); background: rgba(255,95,179,.55); }
+  .rider h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 30px; letter-spacing: .06em; margin-bottom: 4px; }
+  .rider .sub { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #6c5f73; margin-bottom: 14px; }
+  .rider ol { padding-left: 26px; font-size: 14px; line-height: 1.6; }
+  .rider li { margin-bottom: 8px; }
+  .rider li::marker { font-weight: 700; color: #c4106a; }
+
+  footer { text-align: center; padding: 40px 16px 60px; font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  footer b { display: block; font-family: "Yellowtail", cursive; font-weight: 400; font-size: 40px; letter-spacing: 0; text-transform: none; color: #fff; text-shadow: 0 0 14px var(--pink); margin-bottom: 6px; }
+
+  /* ================= VIP PASS DIALOG ================= */
+  dialog {
+    width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto;
+    border: 0; padding: 0; background: transparent; color: inherit; overflow: visible;
+  }
+  dialog::backdrop { background: rgba(7,5,10,.82); backdrop-filter: blur(4px); }
+  dialog[open] { animation: pop .28s cubic-bezier(.2,1.3,.4,1); }
+  @keyframes pop { from { transform: scale(.9) translateY(14px); opacity: 0; } }
+  .pass {
+    position: relative; max-height: calc(100dvh - 24px); overflow-y: auto;
+    background: linear-gradient(180deg, #1b0d21, #0c070f); border-radius: 18px;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 5px var(--pink), 0 0 60px var(--pink-glow);
+  }
+  .pass-top { position: relative; padding: 30px 22px 22px; text-align: center; background: var(--holo); background-size: 200% 100%; animation: holo 6s linear infinite; color: var(--black); }
+  .pass-top .hole { width: 54px; height: 10px; border-radius: 99px; background: #0c070f; margin: -14px auto 14px; }
+  .pass-top .aa { font-family: "Anton", sans-serif; font-size: 13px; letter-spacing: .4em; }
+  .pass-top h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: clamp(34px, 10vw, 52px); line-height: 1; text-transform: uppercase; margin-top: 6px; }
+  .pass-top .when { font-family: "Space Mono", monospace; font-weight: 700; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; margin-top: 8px; }
+  .perf { height: 0; border-top: 3px dashed rgba(255,255,255,.35); margin: 0 18px; position: relative; }
+  .perf::before, .perf::after { content: ""; position: absolute; top: -13px; width: 24px; height: 24px; border-radius: 50%; background: var(--black); }
+  .perf::before { left: -30px; } .perf::after { right: -30px; }
+  .pass-body { padding: 22px 22px 8px; }
+  .pass-intro { font-size: 15px; color: var(--text); margin-bottom: 18px; }
+  .setlist { list-style: none; counter-reset: s; }
+  .setlist li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .setlist li::before {
+    counter-increment: s; content: counter(s, decimal-leading-zero);
+    font-family: "Anton", sans-serif; font-size: 22px; color: var(--pink-hot); line-height: 1.1;
+  }
+  .setlist .t { font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .setlist h4 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 21px; letter-spacing: .03em; text-transform: uppercase; color: #fff; line-height: 1.15; margin: 2px 0 4px; }
+  .setlist p { font-size: 14px; color: #d8cddd; }
+  .dress {
+    margin: 18px 0 6px; padding: 14px 16px; border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,45,149,.25), rgba(185,243,255,.12)); border: 1px solid rgba(255,255,255,.25);
+  }
+  .dress small { font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .24em; color: var(--pink-hot); font-weight: 700; }
+  .dress p { font-size: 15px; margin-top: 2px; }
+  .pass-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 22px 22px; }
+  .pass-foot button {
+    font-family: "Anton", sans-serif; font-size: 14px; letter-spacing: .14em; text-transform: uppercase;
+    background: none; color: #fff; border: 2px solid rgba(255,255,255,.4); border-radius: 4px; padding: 8px 14px;
+  }
+  .pass-foot button:hover, .pass-foot button:focus-visible { border-color: var(--pink); background: rgba(255,45,149,.2); outline: none; }
+  .pass-foot button:disabled { opacity: .25; cursor: default; }
+  .barcode { height: 34px; flex: 1; max-width: 160px; background: repeating-linear-gradient(90deg, #fff 0 2px, transparent 2px 4px, #fff 4px 5px, transparent 5px 9px, #fff 9px 12px, transparent 12px 14px); opacity: .8; }
+  .x {
+    position: absolute; top: 10px; right: 10px; z-index: 3; width: 36px; height: 36px; border-radius: 50%;
+    border: 0; background: var(--black); color: #fff; font-size: 20px; line-height: 1;
+  }
+  .x:focus-visible { outline: 2px solid var(--pink); }
+
+  @media (max-width: 520px) {
+    .date-btn { grid-template-columns: 62px 1fr; gap: 12px; }
+    .d-day b { font-size: 36px; }
+    .d-cta { grid-column: 2; justify-self: start; margin-top: 2px; font-size: 12px; padding: 6px 10px; }
+    .sold { right: 10px; top: auto; bottom: 24px; transform: rotate(-8deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<main>
+<header class="cover" id="cover">
+  <figure class="cover-art">
+    <img src="cover.webp" width="1024" height="1536"
+      alt="Mrs. Worldwide: The Final World Tour poster. Haylee stands in the center in a white blazer, surrounded by her security entourage in black suits and sunglasses. Taglines read One Bride. One Planet. Zero Chill. and Live Laugh Pitbull.">
+    <a class="ticket-hotspot" href="#tour" aria-label="Admit one: enter the tour"></a>
+  </figure>
+  <p class="tap-hint">🎟️ Tap your <b>Admit One</b> ticket to enter the tour</p>
+</header>
+
+<!-- ================= TOUR PAGE (shown after tapping the ticket) ================= -->
+<div class="tour-view">
+<nav class="tour-top" aria-label="Tour pages">
+  <a class="back" href="#cover">← Poster</a>
+  <div class="tabs">
+    <a href="#tour" data-tab="tour">Tour Dates</a>
+    <a href="#info" data-tab="info">Tour Info</a>
+    <a class="rsvp-link" href="#rsvp" data-tab="rsvp">RSVP</a>
+  </div>
+</nav>
+
+<div class="page" data-page="tour">
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="chrome">Tour Dates</h2>
+      <p>Three days · One city · Zero chill</p>
+    </div>
+    <div class="tour-info">
+      <div class="datebar">Santa Barbara, CA · April 16–18, 2027</div>
+      <div class="countdown" aria-live="polite">
+        <span class="lbl">Doors open in</span>
+        <div class="cd"><b id="cd-d">--</b><small>DAYS</small></div>
+        <div class="cd"><b id="cd-h">--</b><small>HRS</small></div>
+        <div class="cd"><b id="cd-m">--</b><small>MIN</small></div>
+        <div class="cd"><b id="cd-s">--</b><small>SEC</small></div>
+      </div>
+    </div>
+    <div class="bus-lane" aria-hidden="true">
+      <svg class="bus" viewBox="0 0 120 40">
+        <rect x="2" y="4" width="112" height="28" rx="6" fill="#0c070f" stroke="#fff" stroke-width="1.5"/>
+        <rect x="2" y="18" width="112" height="5" fill="#ff2d95"/>
+        <g fill="#b9f3ff" opacity=".85"><rect x="10" y="8" width="14" height="8" rx="1"/><rect x="28" y="8" width="14" height="8" rx="1"/><rect x="46" y="8" width="14" height="8" rx="1"/><rect x="64" y="8" width="14" height="8" rx="1"/><rect x="96" y="8" width="14" height="12" rx="2"/></g>
+        <text x="48" y="30" font-family="Anton, sans-serif" font-size="6" fill="#fff" text-anchor="middle" letter-spacing="1">MRS. WORLDBRIDE TOUR</text>
+        <circle cx="26" cy="33" r="6" fill="#222" stroke="#d9dde3" stroke-width="2"/><circle cx="92" cy="33" r="6" fill="#222" stroke="#d9dde3" stroke-width="2"/>
+      </svg>
+    </div>
+    <ul class="dates" id="dates"></ul>
+  </div>
+</section>
+
+<!-- ================= TOUR RIDER ================= -->
+<section>
+  <div class="wrap">
+    <div class="rider">
+      <h3>THE TOUR RIDER</h3>
+      <p class="sub">Official requirements · Mrs. Worldbride 2027</p>
+      <ol>
+        <li>The headliner is never without a drink, a snack or a hype woman.</li>
+        <li>The Security Detail stays in character at all times. Aviators are not optional.</li>
+        <li>Every photo is an album cover. Pose accordingly.</li>
+        <li>White is reserved for the bride. Each night has outfit inspo if you want to play along.</li>
+        <li>What happens on tour stays on tour.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ================= RSVP PAGE ================= -->
+<div class="page" data-page="rsvp" hidden>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="chrome">RSVP</h2>
+      <p>Claim your spot on the tour</p>
+    </div>
+    <form class="rsvp-form" id="rsvp-form" novalidate></form>
+    <div class="rsvp-done" id="rsvp-done" hidden>
+      <small>ALL ACCESS CONFIRMED</small>
+      <h2 id="done-title">You're on the tour!</h2>
+      <p id="done-text"></p>
+      <a class="rsvp-btn" href="#tour">See the tour dates →</a>
+    </div>
+    <div class="rsvp-done" id="rsvp-handoff" hidden>
+      <small>ONE LAST STEP</small>
+      <h2>Almost on the tour</h2>
+      <p>Your answers are filled in on the Google Form. Tap below, then hit <b>Submit</b> there to lock in your spot.</p>
+      <a class="rsvp-btn" id="handoff-link" href="#rsvp" target="_blank" rel="noopener">Send my RSVP →</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ================= TOUR INFO PAGE ================= -->
+<div class="page" data-page="info" hidden>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="chrome">Tour Info</h2>
+      <p>Everything the crew needs to know</p>
+    </div>
+
+    <div class="facts">
+      <div class="fact">
+        <small>WHERE</small>
+        <h3>Santa Barbara, CA</h3>
+        <!-- Replace the text in brackets with the Airbnb address -->
+        <p class="address">📍 <span>[Airbnb address]</span></p>
+        <p>Tour HQ is our Airbnb for the weekend. The whole crew stays together.</p>
+      </div>
+      <div class="fact">
+        <small>WHEN</small>
+        <h3>April 16–18, 2027</h3>
+        <p>Friday through Sunday. Three days, two nights, one bride.</p>
+      </div>
+      <div class="fact">
+        <small>DOORS OPEN</small>
+        <h3>Friday · 3:00 PM</h3>
+        <p>Check in at Tour HQ any time from 3 PM. Opening Night kicks off in the early evening.</p>
+      </div>
+      <div class="fact">
+        <small>FINAL BOWS</small>
+        <h3>Sunday · Midday</h3>
+        <p>We wrap after the recovery brunch, so plan to head home Sunday afternoon.</p>
+      </div>
+      <div class="fact">
+        <small>GETTING THERE</small>
+        <h3>Travel</h3>
+        <ul>
+          <li><b>Santa Barbara Airport (SBA):</b> about 15 minutes from town</li>
+          <li><b>LAX:</b> more flights, about 2 hours by car</li>
+          <li><b>Amtrak Pacific Surfliner:</b> stops right downtown</li>
+        </ul>
+      </div>
+      <div class="fact">
+        <small>THE FORECAST</small>
+        <h3>Sun by day, cool by night</h3>
+        <p>April in Santa Barbara means sunny days in the mid-60s °F and evenings in the 50s. Bring a layer for nights out.</p>
+      </div>
+    </div>
+
+    <div class="sub-head"><h2 class="chrome">Packing List</h2><span>Check it off as you pack</span></div>
+    <div class="pack">
+      <div class="pack-progress">
+        <div class="pack-bar"><span id="pack-bar"></span></div>
+        <span class="pack-count" id="pack-count">0 packed</span>
+      </div>
+      <div class="pack-cols" id="pack-list">
+        <div>
+          <h4>THE LOOKS</h4>
+          <label><input type="checkbox"><span>Black &amp; chrome outfit for Opening Night</span></label>
+          <label><input type="checkbox"><span>Hot pink or glitter look for Saturday night</span></label>
+          <label><input type="checkbox"><span>Swimsuit &amp; cover-up for beach day</span></label>
+          <label><input type="checkbox"><span>Comfy brunch outfit for Sunday</span></label>
+          <label><input type="checkbox"><span>Pajamas for the after-party</span></label>
+          <label><input type="checkbox"><span>A jacket or layer for cool evenings</span></label>
+        </div>
+        <div>
+          <h4>ACCESSORIES</h4>
+          <label><input type="checkbox"><span>Sunglasses (Security Detail approved)</span></label>
+          <label><input type="checkbox"><span>Going-out shoes</span></label>
+          <label><input type="checkbox"><span>Walkable shoes</span></label>
+          <label><input type="checkbox"><span>Sandals for the beach</span></label>
+          <label><input type="checkbox"><span>Sparkly jewelry</span></label>
+        </div>
+        <div>
+          <h4>ESSENTIALS</h4>
+          <label><input type="checkbox"><span>ID</span></label>
+          <label><input type="checkbox"><span>Sunscreen</span></label>
+          <label><input type="checkbox"><span>Phone charger &amp; portable battery</span></label>
+          <label><input type="checkbox"><span>Beach towel</span></label>
+          <label><input type="checkbox"><span>Recovery kit: electrolytes &amp; pain reliever</span></label>
+        </div>
+      </div>
+      <p class="pack-note">Your checkmarks save on this device only.</p>
+    </div>
+
+    <div class="rsvp-card">
+      <small>RESERVE YOUR SPOT ON TOUR</small>
+      <h2>RSVP</h2>
+      <p>A few quick questions so we can plan the weekend around you.</p>
+      <a class="rsvp-btn" href="#rsvp">RSVP Now →</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <b>Mr. Worldwide who?</b>
+  Mrs. Worldbride · The Final World Tour · 2027
+</footer>
+</div>
+</main>
+
+<!-- ================= VIP PASS ================= -->
+<dialog id="pass" aria-labelledby="pass-title">
+  <div class="pass">
+    <button class="x" id="pass-close" aria-label="Close">✕</button>
+    <div class="pass-top">
+      <div class="hole"></div>
+      <div class="aa">ALL ACCESS · VIP</div>
+      <h3 id="pass-title"></h3>
+      <div class="when" id="pass-when"></div>
+    </div>
+    <div class="perf"></div>
+    <div class="pass-body">
+      <p class="pass-intro" id="pass-intro"></p>
+      <ol class="setlist" id="pass-setlist"></ol>
+      <div class="dress"><small>OUTFIT INSPO</small><p id="pass-dress"></p></div>
+    </div>
+    <div class="pass-foot">
+      <button id="pass-prev">← Prev</button>
+      <div class="barcode" aria-hidden="true"></div>
+      <button id="pass-next">Next →</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  /* ================= RSVP → GOOGLE FORM =================
+     Answers are sent to this Google Form, which saves them to the linked sheet.
+     Each key below needs the question's ID from the form's pre-filled link (the number after "entry."). */
+  const FORM_ID = "1FAIpQLSfBDvjRR8k86GudtfV_bz6rchREk-q2z1ykvxtIgJpeYs538w";
+  const FORM_ENTRIES = {
+    email: "emailAddress", // the form's built-in email question
+    name: "1809082762", going: "1901324897", stops: "254870632", phone: "1334042888",
+    travel: "761244352", arrive: "1018499182", car: "954555247",
+    diet: "1953612683", room: "978455679", notes: "2065395846",
+    codename: "977764740", song: "1697123806", story: "686195337"
+  };
+
+  /* The questions. Option text must match the Google Form exactly. */
+  const NOT_GOING = "Can't make it, but sending love 💗";
+  const RSVP_QUESTIONS = [
+    { group: "The Basics" },
+    { key: "name", label: "Your name", type: "text", required: true, autocomplete: "name" },
+    { key: "email", label: "Email", type: "email", required: true, autocomplete: "email" },
+    { key: "going", label: "Are you joining the tour?", type: "radio", required: true,
+      options: ["Yes! Put me on the tour 🎤", "I'll be there for part of it", NOT_GOING] },
+    { key: "stops", label: "Which tour stops will you make?", type: "checkbox", required: true, logistics: true,
+      options: ["Fri, Apr 16: Opening Night", "Sat, Apr 17: The Main Stage", "Sun, Apr 18: The Grand Finale"] },
+    { key: "phone", label: "Phone number (for the group chat)", type: "tel", autocomplete: "tel" },
+    { group: "Travel", logistics: true },
+    { key: "travel", label: "How are you getting to Santa Barbara?", type: "radio", logistics: true,
+      options: ["Flying into Santa Barbara (SBA)", "Flying into LAX", "Driving", "Amtrak", "Other"] },
+    { key: "arrive", label: "When do you expect to arrive?", type: "radio", logistics: true,
+      options: ["Friday before 3 PM", "Friday, 3–6 PM", "Friday evening", "Saturday"] },
+    { key: "car", label: "Will you have a car?", type: "radio", logistics: true,
+      options: ["Yes, and I can give rides", "Yes, but no extra seats", "No"] },
+    { group: "Planning Around You", logistics: true },
+    { key: "diet", label: "Dietary restrictions or allergies", type: "textarea", logistics: true },
+    { key: "room", label: "Roommate requests", type: "text", logistics: true },
+    { key: "notes", label: "Anything else we should know?", help: "Light sleeper, accessibility needs, arriving late…", type: "textarea", logistics: true },
+    { group: "The Fun Part" },
+    { key: "codename", label: "Your Security Detail codename", type: "text" },
+    { key: "song", label: "One song that has to be on the tour playlist", type: "text" },
+    { key: "story", label: "Your best Haylee story", help: "We might use it for the games or a toast 👀", type: "textarea" }
+  ];
+
+  /* ================= EDIT THE TOUR HERE ================= */
+  const DOORS_OPEN = new Date("2027-04-16T15:00:00-07:00"); // Friday afternoon, Pacific Time
+
+  const TOUR = [
+    {
+      dow: "FRI", day: "16", mon: "APR",
+      title: "Opening Night",
+      venue: "Santa Barbara, CA · Tour HQ",
+      intro: "The tour bus pulls into Santa Barbara and the world tour officially begins. Arrive, settle in, and get ready for a night built around the bride.",
+      setlist: [
+        { t: "Afternoon", h: "Arrivals & Check-In", p: "The crew lands at Tour HQ. Drop your bags, grab your welcome bag and pick up your all-access pass." },
+        { t: "Early Evening", h: "The Credentials Ceremony", p: "Haylee receives her sash and crown, the Security Detail suits up, and we open the tour with a champagne toast." },
+        { t: "Evening", h: "Opening Night Dinner", p: "A long-table dinner downtown with the whole crew to kick off the weekend." },
+        { t: "Late Night", h: "Bachelorette Festivities", p: "Back at HQ for the after-party: gifts, games, music and the first round of chaos." }
+      ],
+      dress: "Think black & chrome: all black with a little metallic shine."
+    },
+    {
+      dow: "SAT", day: "17", mon: "APR",
+      title: "The Main Stage",
+      venue: "Santa Barbara, CA · Beach to Downtown",
+      intro: "The headline show. A full day on the coast followed by the biggest night of the tour.",
+      setlist: [
+        { t: "Morning", h: "Soundcheck", p: "Slow start at HQ with coffee, breakfast and mimosas before we hit the road." },
+        { t: "Midday", h: "Beach Day", p: "Sun, sand, a speaker and cold drinks on the Santa Barbara coast." },
+        { t: "Afternoon", h: "The Mrs. Worldbride Games", p: "Team challenges, bride trivia and the newlywed quiz. The winning team takes home bragging rights for life." },
+        { t: "Night", h: "Headliner Night Out", p: "Dinner, then dancing downtown. The bride headlines and the crew brings the energy." }
+      ],
+      dress: "Day: bright Miami-beach swim and cover-ups. Night: hot pink, glitter and sequins."
+    },
+    {
+      dow: "SUN", day: "18", mon: "APR",
+      title: "The Grand Finale",
+      venue: "Santa Barbara, CA · Encore",
+      intro: "The final show. One last meal together, one last group photo, and the tour comes to a close.",
+      setlist: [
+        { t: "Late Morning", h: "Recovery Brunch", p: "The encore: big breakfast, bigger sunglasses and a recap of everything that happened." },
+        { t: "Midday", h: "Final Bows", p: "Group photo, farewell toast and safe travels home. Mrs. Worldbride signs off." }
+      ],
+      dress: "Tour merch, oversized sunglasses and whatever feels comfiest."
+    }
+  ];
+
+  /* ================= TOUR DATES LIST ================= */
+  const $ = id => document.getElementById(id);
+  $("dates").innerHTML = TOUR.map((d, i) => `
+    <li class="date-row">
+      <button class="date-btn" data-i="${i}" aria-haspopup="dialog">
+        <span class="d-day"><small>${d.dow}</small><b>${d.day}</b><i>${d.mon}</i></span>
+        <span class="d-info"><h3>${d.title}</h3><p>${d.venue}</p></span>
+        <span class="d-cta">VIP Pass →</span>
+        <span class="sold">SOLD OUT</span>
+      </button>
+    </li>`).join("");
+
+  /* ================= VIP PASS DIALOG ================= */
+  const dlg = $("pass");
+  let current = 0;
+  function render(i) {
+    current = i;
+    const d = TOUR[i];
+    $("pass-title").textContent = d.title;
+    $("pass-when").textContent = `${d.dow} · ${d.mon} ${d.day} · ${d.venue}`;
+    $("pass-intro").textContent = d.intro;
+    $("pass-setlist").innerHTML = d.setlist.map(s => `<li><div><div class="t">${s.t}</div><h4>${s.h}</h4><p>${s.p}</p></div></li>`).join("");
+    $("pass-dress").textContent = d.dress;
+    $("pass-prev").disabled = i === 0;
+    $("pass-next").disabled = i === TOUR.length - 1;
+    dlg.querySelector(".pass").scrollTop = 0;
+  }
+  document.querySelectorAll(".date-btn").forEach(b => b.addEventListener("click", () => {
+    render(+b.dataset.i);
+    dlg.showModal();
+    $("pass-close").focus({ preventScroll: true });
+    dlg.querySelector(".pass").scrollTop = 0;
+  }));
+  $("pass-close").addEventListener("click", () => dlg.close());
+  $("pass-prev").addEventListener("click", () => render(current - 1));
+  $("pass-next").addEventListener("click", () => render(current + 1));
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+  /* ================= PAGES: cover, tour dates, tour info ================= */
+  const PAGES = ["tour", "info", "rsvp"];
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  function route() {
+    const page = location.hash.slice(1);
+    const onTour = PAGES.includes(page);
+    document.body.classList.toggle("on-tour", onTour);
+    document.querySelectorAll(".page").forEach(p => p.hidden = p.dataset.page !== page);
+    document.querySelectorAll(".tabs [data-tab]").forEach(t =>
+      t.dataset.tab === page ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current"));
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  /* ================= RSVP FORM ================= */
+  const form = $("rsvp-form");
+  const esc = t => t.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  (function buildForm() {
+    let html = "", open = false;
+    RSVP_QUESTIONS.forEach(q => {
+      if (q.group) {
+        if (open) html += "</fieldset>";
+        html += `<fieldset class="q-group${q.logistics ? " logistics" : ""}"><legend>${esc(q.group)}</legend>`;
+        open = true; return;
+      }
+      const req = q.required ? ' <i aria-hidden="true">*</i>' : "";
+      const help = q.help ? `<span class="q-help">${esc(q.help)}</span>` : "";
+      const cls = `q${q.logistics ? " logistics" : ""}`;
+      const err = `<span class="q-err">${q.type === "checkbox" ? "Pick at least one" : q.type === "radio" ? "Pick one" : "Required"}</span>`;
+      if (q.type === "radio" || q.type === "checkbox") {
+        const chips = q.options.map(o =>
+          `<label class="chip"><input type="${q.type}" name="${q.key}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("");
+        html += `<div class="${cls}" data-key="${q.key}" role="group" aria-labelledby="ql-${q.key}">
+          <span class="q-label" id="ql-${q.key}">${esc(q.label)}${req}</span>${help}<div class="chips">${chips}</div>${err}</div>`;
+      } else {
+        const field = q.type === "textarea"
+          ? `<textarea name="${q.key}" id="f-${q.key}"></textarea>`
+          : `<input type="${q.type}" name="${q.key}" id="f-${q.key}"${q.autocomplete ? ` autocomplete="${q.autocomplete}"` : ""}>`;
+        html += `<div class="${cls}" data-key="${q.key}"><label class="q-label" for="f-${q.key}">${esc(q.label)}${req}</label>${help}${field}${err}</div>`;
+      }
+    });
+    if (open) html += "</fieldset>";
+    html += `<p class="form-msg" id="form-msg" role="alert"></p><button class="rsvp-submit" type="submit">Lock in my spot</button>`;
+    form.innerHTML = html;
+  })();
+
+  const values = key => [...form.querySelectorAll(`[name="${key}"]`)]
+    .filter(el => (el.type === "radio" || el.type === "checkbox") ? el.checked : el.value.trim())
+    .map(el => el.value.trim());
+  const notGoing = () => values("going")[0] === NOT_GOING;
+
+  function toggleLogistics() {
+    form.querySelectorAll(".logistics").forEach(el => el.hidden = notGoing());
+  }
+  form.addEventListener("change", e => {
+    if (e.target.name === "going") toggleLogistics();
+    e.target.closest(".q")?.classList.remove("invalid");
+  });
+  form.addEventListener("input", e => e.target.closest(".q")?.classList.remove("invalid"));
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const msg = $("form-msg");
+    msg.textContent = "";
+    form.querySelectorAll(".q.invalid").forEach(el => el.classList.remove("invalid"));
+    // check required questions (skipping the ones hidden for people who can't make it)
+    let firstBad = null;
+    RSVP_QUESTIONS.filter(q => q.required && !(q.logistics && notGoing())).forEach(q => {
+      if (!values(q.key).length) {
+        const el = form.querySelector(`.q[data-key="${q.key}"]`);
+        el.classList.add("invalid");
+        firstBad = firstBad || el;
+      }
+    });
+    const emailEl = form.querySelector('.q[data-key="email"]');
+    const email = values("email")[0];
+    if (!email) emailEl.querySelector(".q-err").textContent = "Required";
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailEl.classList.add("invalid");
+      emailEl.querySelector(".q-err").textContent = "That email doesn't look right";
+      firstBad = firstBad || emailEl;
+    }
+    if (firstBad) {
+      firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+      msg.textContent = "A couple of answers are missing.";
+      return;
+    }
+    if (Object.values(FORM_ENTRIES).some(v => !v)) {
+      msg.textContent = "The RSVP isn't connected to the Google Form yet.";
+      return;
+    }
+    const body = new URLSearchParams();
+    RSVP_QUESTIONS.filter(q => q.key && !(q.logistics && notGoing())).forEach(q =>
+      values(q.key).forEach(v => {
+        const id = FORM_ENTRIES[q.key];
+        body.append(/^\d+$/.test(id) ? `entry.${id}` : id, v);
+      }));
+
+    const btn = form.querySelector(".rsvp-submit");
+    btn.disabled = true; btn.textContent = "Sending…";
+    let sent = false;
+    try {
+      // Google Forms doesn't allow reading the reply from another site, so a sent request counts as success.
+      await fetch(`https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`, { method: "POST", mode: "no-cors", body });
+      sent = true;
+    } catch (err) {}
+    if (!sent) {
+      // Background sending is blocked here (for example inside a shared-link viewer),
+      // so hand off to the Google Form with every answer pre-filled.
+      $("handoff-link").href = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${body.toString()}`;
+      form.hidden = true;
+      $("rsvp-handoff").hidden = false;
+      window.scrollTo(0, 0);
+      return;
+    }
+    {
+      const first = values("name")[0].split(" ")[0];
+      $("done-title").textContent = notGoing() ? "We'll miss you!" : "You're on the tour!";
+      $("done-text").textContent = notGoing()
+        ? `Thanks for letting us know, ${first}. We'll save you a sash in spirit. 💗`
+        : `Thanks, ${first}! Your all-access pass is confirmed. Check Tour Info for the address and packing list. 🎤`;
+      form.hidden = true;
+      $("rsvp-done").hidden = false;
+      window.scrollTo(0, 0);
+    }
+  });
+
+  /* ================= PACKING LIST (saved per device) ================= */
+  const PACK_KEY = "mrs-worldbride-packing";
+  const boxes = [...document.querySelectorAll("#pack-list input")];
+  let packed = [];
+  try { packed = JSON.parse(localStorage.getItem(PACK_KEY)) || []; } catch (e) {}
+  boxes.forEach((b, i) => { b.checked = !!packed[i]; b.addEventListener("change", updatePack); });
+  function updatePack() {
+    const done = boxes.filter(b => b.checked).length;
+    $("pack-bar").style.width = (done / boxes.length * 100) + "%";
+    $("pack-count").textContent = done === boxes.length ? "Tour ready! 🎤" : `${done} of ${boxes.length} packed`;
+    try { localStorage.setItem(PACK_KEY, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+  }
+  updatePack();
+
+  /* ================= COUNTDOWN ================= */
+  const pad = n => String(n).padStart(2, "0");
+  function tick() {
+    const diff = DOORS_OPEN - Date.now();
+    if (diff <= 0) {
+      document.querySelector(".countdown").innerHTML = '<span class="lbl" style="font-size:16px;color:#fff">The tour is live. Dale!</span>';
+      clearInterval(timer); return;
+    }
+    const s = Math.floor(diff / 1000);
+    $("cd-d").textContent = Math.floor(s / 86400);
+    $("cd-h").textContent = pad(Math.floor(s % 86400 / 3600));
+    $("cd-m").textContent = pad(Math.floor(s % 3600 / 60));
+    $("cd-s").textContent = pad(s % 60);
+  }
+  const timer = setInterval(tick, 1000);
+  tick();
+</script>
+</body>
+</html>
