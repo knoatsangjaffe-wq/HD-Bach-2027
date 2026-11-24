@@ -152,7 +152,7 @@
   /* Venmo / Airbnb share */
   .venmo {
     display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px 20px;
-    margin-bottom: 22px; padding: 20px; border-radius: 12px;
+    padding: 20px; border-radius: 12px;
     background: linear-gradient(135deg, rgba(255,45,149,.22), rgba(185,243,255,.08));
     border: 1px solid rgba(255,255,255,.3);
   }
@@ -706,8 +706,7 @@
         { t: "Evening", h: "Opening Night Dinner", p: "A long-table dinner downtown with the whole crew to kick off the weekend." },
         { t: "Late Night", h: "Bachelorette Festivities", p: "Back at HQ for the after-party: gifts, games, music and the first round of chaos." }
       ],
-      dress: ["Dinner: A nice dinner outfit. Dressy, cute and ready for photos."],
-      inspo: { label: "See dinner outfit ideas on Pinterest →", url: "https://www.pinterest.com/search/pins/?q=girl%20dinner%20outfit" }
+      dress: ["Dinner: A nice dinner outfit. Dressy, cute and ready for photos."]
     },
     {
       dow: "SAT", day: "17", mon: "APR",
@@ -827,6 +826,8 @@
     if (open) html += "</fieldset>";
     html += `<p class="form-msg" id="form-msg" role="alert"></p><button class="rsvp-submit" type="submit">Lock in my spot</button>`;
     form.innerHTML = html;
+    // The Venmo request sits at the bottom of the form, right above the submit button.
+    form.insertBefore($("venmo-card"), $("form-msg"));
   })();
 
   const values = key => [...form.querySelectorAll(`[name="${key}"]`)]
@@ -836,6 +837,7 @@
 
   function toggleLogistics() {
     form.querySelectorAll(".logistics").forEach(el => el.hidden = notGoing());
+    $("venmo-card").hidden = notGoing(); // only people who are coming pay a share
   }
   form.addEventListener("change", e => {
     if (e.target.name === "going") toggleLogistics();
