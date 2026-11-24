@@ -140,7 +140,40 @@
   .fact.wide { grid-column: 1 / -1; }
   .fact .address {
     display: inline-block; margin: 2px 0 10px; padding: 6px 12px; border-radius: 6px;
-    background: rgba(255,45,149,.16); border: 1px dashed var(--pink); color: #fff; font-weight: 600;
+    background: rgba(255,45,149,.16); border: 1px solid rgba(255,45,149,.6); color: #fff; font-weight: 600;
+  }
+  .fact-link {
+    display: inline-block; margin-top: 12px; font-family: "Anton", sans-serif; font-size: 14px; letter-spacing: .12em;
+    text-transform: uppercase; text-decoration: none; color: #fff; padding: 8px 14px; border-radius: 4px;
+    border: 2px solid var(--pink); background: rgba(255,45,149,.12);
+  }
+  .fact-link:hover, .fact-link:focus-visible { background: var(--pink); outline: none; }
+
+  /* Venmo / Airbnb share */
+  .venmo {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px 20px;
+    margin-bottom: 22px; padding: 20px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,45,149,.22), rgba(185,243,255,.08));
+    border: 1px solid rgba(255,255,255,.3);
+  }
+  .venmo small { font-family: "Space Mono", monospace; font-size: 11px; font-weight: 700; letter-spacing: .24em; color: var(--pink-hot); }
+  .venmo h3 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 30px; letter-spacing: .03em; line-height: 1.1; color: #fff; margin: 2px 0 6px; }
+  .venmo p { font-size: 14px; color: #d8cddd; }
+  .venmo .handle { margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .venmo .handle code { font-family: "Space Mono", monospace; font-size: 13px; color: #fff; background: rgba(0,0,0,.4); padding: 4px 8px; border-radius: 4px; user-select: all; }
+  .copy-btn { font-size: 12px; padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(255,255,255,.35); background: none; color: #fff; }
+  .copy-btn:hover, .copy-btn:focus-visible { border-color: var(--pink); outline: none; }
+  .venmo-btn {
+    justify-self: end; white-space: nowrap; text-decoration: none; padding: 12px 20px; border-radius: 999px;
+    font-family: "Anton", sans-serif; font-size: 16px; letter-spacing: .14em; text-transform: uppercase; color: #fff;
+    background: #008cff; border: 2px solid #fff; box-shadow: 0 0 18px rgba(0,140,255,.45);
+  }
+  .venmo-btn:hover, .venmo-btn:focus-visible { transform: scale(1.04); outline: none; }
+  .rsvp-done .next-step { margin-top: 18px; padding-top: 16px; border-top: 1px dashed rgba(7,5,10,.35); }
+  .rsvp-done .next-step .venmo-btn { display: inline-block; margin-top: 12px; }
+  @media (max-width: 520px) {
+    .venmo { grid-template-columns: 1fr; }
+    .venmo-btn { justify-self: start; }
   }
 
   .sub-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 44px 0 16px; }
@@ -388,7 +421,7 @@
   <div class="wrap">
     <div class="sec-head">
       <h2 class="chrome">Tour Dates</h2>
-      <p>Three days · One city · Zero chill</p>
+      <p>Three days · One city · Dale</p>
     </div>
     <div class="tour-info">
       <div class="datebar">Santa Barbara, CA · April 16–18, 2027</div>
@@ -439,11 +472,24 @@
       <h2 class="chrome">RSVP</h2>
       <p>Claim your spot on the tour</p>
     </div>
+    <div class="venmo" id="venmo-card">
+      <div>
+        <small>AIRBNB SHARE</small>
+        <h3>$300 per person</h3>
+        <p>If you're coming, Venmo <b>Tori Dobbs</b> $300 for your share of Tour HQ.</p>
+        <p class="handle"><code id="venmo-handle">@Tori-Houston-Dobbs</code><button class="copy-btn" type="button" id="copy-venmo">Copy</button></p>
+      </div>
+      <a class="venmo-btn" href="https://venmo.com/u/Tori-Houston-Dobbs" target="_blank" rel="noopener">Pay Tori on Venmo →</a>
+    </div>
     <form class="rsvp-form" id="rsvp-form" novalidate></form>
     <div class="rsvp-done" id="rsvp-done" hidden>
       <small>ALL ACCESS CONFIRMED</small>
       <h2 id="done-title">You're on the tour!</h2>
       <p id="done-text"></p>
+      <div class="next-step" id="done-venmo" hidden>
+        <p><b>Next step:</b> Venmo Tori Dobbs $300 for your share of the Airbnb (@Tori-Houston-Dobbs).</p>
+        <a class="venmo-btn" href="https://venmo.com/u/Tori-Houston-Dobbs" target="_blank" rel="noopener">Pay Tori on Venmo →</a>
+      </div>
       <a class="rsvp-btn" href="#tour">See the tour dates →</a>
     </div>
     <div class="rsvp-done" id="rsvp-handoff" hidden>
@@ -451,6 +497,10 @@
       <h2>Almost on the tour</h2>
       <p>Your answers are filled in on the Google Form. Tap below, then hit <b>Submit</b> there to lock in your spot.</p>
       <a class="rsvp-btn" id="handoff-link" href="#rsvp" target="_blank" rel="noopener">Send my RSVP →</a>
+      <div class="next-step" id="handoff-venmo" hidden>
+        <p><b>Then:</b> Venmo Tori Dobbs $300 for your share of the Airbnb (@Tori-Houston-Dobbs).</p>
+        <a class="venmo-btn" href="https://venmo.com/u/Tori-Houston-Dobbs" target="_blank" rel="noopener">Pay Tori on Venmo →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -469,14 +519,14 @@
       <div class="fact">
         <small>WHERE</small>
         <h3>Santa Barbara, CA</h3>
-        <!-- Replace the text in brackets with the Airbnb address -->
-        <p class="address">📍 <span>[Airbnb address]</span></p>
-        <p>Tour HQ is our Airbnb for the weekend. The whole crew stays together.</p>
+        <p class="address">📍 The Marlowe Seaside Inn</p>
+        <p>Tour HQ is our Airbnb for the weekend, steps from the beach. Four bedrooms, eight beds and four baths for the whole crew.</p>
+        <a class="fact-link" href="https://www.airbnb.com/rooms/1409655128580375090" target="_blank" rel="noopener">View the Airbnb →</a>
       </div>
       <div class="fact">
         <small>WHEN</small>
         <h3>April 16–18, 2027</h3>
-        <p>Friday through Sunday. Three days, two nights, one bride.</p>
+        <p>Arrive Friday evening, depart Sunday after brunch</p>
       </div>
       <div class="fact">
         <small>DOORS OPEN</small>
@@ -591,7 +641,8 @@
     name: "1809082762", going: "1901324897", stops: "254870632", phone: "1334042888",
     travel: "761244352", arrive: "1018499182", car: "954555247",
     diet: "1953612683", room: "978455679", notes: "2065395846",
-    codename: "977764740", song: "1697123806", story: "686195337"
+    codename: "977764740", song: "1697123806", story: "686195337",
+    budget: "815848351", prefer: "1785532718", mealBudget: "1468798955", tripBudget: "1496439180"
   };
 
   /* The questions. Option text must match the Google Form exactly. */
@@ -612,6 +663,15 @@
       options: ["Friday before 3 PM", "Friday, 3–6 PM", "Friday evening", "Saturday"] },
     { key: "car", label: "Will you have a car?", type: "radio", logistics: true,
       options: ["Yes, and I can give rides", "Yes, but no extra seats", "No"] },
+    { group: "Budget", logistics: true },
+    { key: "budget", label: "What's your budget for the weekend?", help: "Not counting travel or your $300 Airbnb share",
+      type: "radio", logistics: true, options: ["Under $300", "$300–$500", "$500–$750", "$750+"] },
+    { key: "prefer", label: "Would you rather spend more on a nice meal or a fun excursion?", type: "radio", logistics: true,
+      options: ["A nice meal", "A fun excursion", "Either works for me"] },
+    { key: "mealBudget", label: "Preferred budget for the nice meal (per person)", type: "radio", logistics: true,
+      options: ["Under $50", "$50–$100", "$100–$150", "$150+"] },
+    { key: "tripBudget", label: "Preferred budget for the excursion (per person)", type: "radio", logistics: true,
+      options: ["Under $50", "$50–$100", "$100–$200", "$200+"] },
     { group: "Planning Around You", logistics: true },
     { key: "diet", label: "Dietary restrictions or allergies", type: "textarea", logistics: true },
     { key: "room", label: "Roommate requests", type: "text", logistics: true },
@@ -815,6 +875,8 @@
       // so hand off to the Google Form with every answer pre-filled.
       $("handoff-link").href = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${body.toString()}`;
       form.hidden = true;
+      $("venmo-card").hidden = true;
+      $("handoff-venmo").hidden = notGoing();
       $("rsvp-handoff").hidden = false;
       window.scrollTo(0, 0);
       return;
@@ -826,9 +888,19 @@
         ? `Thanks for letting us know, ${first}. We'll save you a sash in spirit. 💗`
         : `Thanks, ${first}! Your all-access pass is confirmed. Check Tour Info for the address and packing list. 🎤`;
       form.hidden = true;
+      $("venmo-card").hidden = true;
+      $("done-venmo").hidden = notGoing();
       $("rsvp-done").hidden = false;
       window.scrollTo(0, 0);
     }
+  });
+
+  /* ================= COPY VENMO HANDLE ================= */
+  $("copy-venmo").addEventListener("click", () => {
+    const btn = $("copy-venmo"), text = $("venmo-handle").textContent;
+    const done = () => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy", 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($("venmo-handle")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = "Selected"; };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
   });
 
   /* ================= PACKING LIST (saved per device) ================= */
