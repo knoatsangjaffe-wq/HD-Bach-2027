@@ -366,7 +366,14 @@
     background: linear-gradient(135deg, rgba(255,45,149,.25), rgba(185,243,255,.12)); border: 1px solid rgba(255,255,255,.25);
   }
   .dress small { font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .24em; color: var(--pink-hot); font-weight: 700; }
-  .dress p { font-size: 15px; margin-top: 2px; }
+  .dress ul { list-style: none; margin-top: 6px; display: grid; gap: 8px; }
+  .dress li { font-size: 15px; line-height: 1.45; }
+  .dress li b { display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
+  .dress a {
+    display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 600; color: #fff;
+    text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 3px;
+  }
+  .dress a:hover, .dress a:focus-visible { color: var(--pink-hot); outline: none; }
   .pass-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 22px 22px; }
   .pass-foot button {
     font-family: "Anton", sans-serif; font-size: 14px; letter-spacing: .14em; text-transform: uppercase;
@@ -563,20 +570,21 @@
       <div class="pack-cols" id="pack-list">
         <div>
           <h4>THE LOOKS</h4>
-          <label><input type="checkbox"><span>Black &amp; chrome outfit for Opening Night</span></label>
-          <label><input type="checkbox"><span>Hot pink or glitter look for Saturday night</span></label>
-          <label><input type="checkbox"><span>Swimsuit &amp; cover-up for beach day</span></label>
-          <label><input type="checkbox"><span>Comfy brunch outfit for Sunday</span></label>
+          <label><input type="checkbox"><span>Nice dinner outfit for Friday night</span></label>
+          <label><input type="checkbox"><span>Athletic clothes for Saturday's morning hike</span></label>
+          <label><input type="checkbox"><span>Swimsuit &amp; cover-up for the beach</span></label>
+          <label><input type="checkbox"><span>White top, black pants or skirt &amp; black suit jacket for Saturday night</span></label>
+          <label><input type="checkbox"><span>Casual brunch outfit for Sunday</span></label>
           <label><input type="checkbox"><span>Pajamas for the after-party</span></label>
           <label><input type="checkbox"><span>A jacket or layer for cool evenings</span></label>
         </div>
         <div>
           <h4>ACCESSORIES</h4>
           <label><input type="checkbox"><span>Sunglasses (Security Detail approved)</span></label>
+          <label><input type="checkbox"><span>Sneakers or hiking boots</span></label>
           <label><input type="checkbox"><span>Going-out shoes</span></label>
-          <label><input type="checkbox"><span>Walkable shoes</span></label>
           <label><input type="checkbox"><span>Sandals for the beach</span></label>
-          <label><input type="checkbox"><span>Sparkly jewelry</span></label>
+          <label><input type="checkbox"><span>Silver or disco accessories</span></label>
         </div>
         <div>
           <h4>ESSENTIALS</h4>
@@ -584,6 +592,7 @@
           <label><input type="checkbox"><span>Sunscreen</span></label>
           <label><input type="checkbox"><span>Phone charger &amp; portable battery</span></label>
           <label><input type="checkbox"><span>Beach towel</span></label>
+          <label><input type="checkbox"><span>Water bottle for the hike</span></label>
           <label><input type="checkbox"><span>Recovery kit: electrolytes &amp; pain reliever</span></label>
         </div>
       </div>
@@ -621,7 +630,7 @@
     <div class="pass-body">
       <p class="pass-intro" id="pass-intro"></p>
       <ol class="setlist" id="pass-setlist"></ol>
-      <div class="dress"><small>OUTFIT INSPO</small><p id="pass-dress"></p></div>
+      <div class="dress"><small>OUTFIT INSPO</small><ul id="pass-dress"></ul><a id="pass-inspo" target="_blank" rel="noopener" hidden></a></div>
     </div>
     <div class="pass-foot">
       <button id="pass-prev">← Prev</button>
@@ -697,20 +706,25 @@
         { t: "Evening", h: "Opening Night Dinner", p: "A long-table dinner downtown with the whole crew to kick off the weekend." },
         { t: "Late Night", h: "Bachelorette Festivities", p: "Back at HQ for the after-party: gifts, games, music and the first round of chaos." }
       ],
-      dress: "Think black & chrome: all black with a little metallic shine."
+      dress: ["Dinner: A nice dinner outfit. Dressy, cute and ready for photos."],
+      inspo: { label: "See dinner outfit ideas on Pinterest →", url: "https://www.pinterest.com/search/pins/?q=girl%20dinner%20outfit" }
     },
     {
       dow: "SAT", day: "17", mon: "APR",
       title: "The Main Stage",
       venue: "Santa Barbara, CA · Beach to Downtown",
-      intro: "The headline show. A full day on the coast followed by the biggest night of the tour.",
+      intro: "The headline show. A morning hike, a day on the coast and the biggest night of the tour.",
       setlist: [
-        { t: "Morning", h: "Soundcheck", p: "Slow start at HQ with coffee, breakfast and mimosas before we hit the road." },
+        { t: "Morning", h: "Morning Hike", p: "Coffee, then a group hike in the Santa Barbara hills to warm up for the main stage." },
         { t: "Midday", h: "Beach Day", p: "Sun, sand, a speaker and cold drinks on the Santa Barbara coast." },
         { t: "Afternoon", h: "The Mrs. Worldbride Games", p: "Team challenges, bride trivia and the newlywed quiz. The winning team takes home bragging rights for life." },
         { t: "Night", h: "Headliner Night Out", p: "Dinner, then dancing downtown. The bride headlines and the crew brings the energy." }
       ],
-      dress: "Day: bright Miami-beach swim and cover-ups. Night: hot pink, glitter and sequins."
+      dress: [
+        "Morning hike: Athletic clothes with sneakers or hiking boots.",
+        "Beach: Beachwear. Swimsuit, cover-up and sandals.",
+        "Night out: White top, black pants or skirt and a black suit jacket, with silver or disco accessories."
+      ]
     },
     {
       dow: "SUN", day: "18", mon: "APR",
@@ -721,7 +735,7 @@
         { t: "Late Morning", h: "Recovery Brunch", p: "The encore: big breakfast, bigger sunglasses and a recap of everything that happened." },
         { t: "Midday", h: "Final Bows", p: "Group photo, farewell toast and safe travels home. Mrs. Worldbride signs off." }
       ],
-      dress: "Tour merch, oversized sunglasses and whatever feels comfiest."
+      dress: ["Brunch: Casual brunch clothes. Comfy and cute."]
     }
   ];
 
@@ -747,7 +761,12 @@
     $("pass-when").textContent = `${d.dow} · ${d.mon} ${d.day} · ${d.venue}`;
     $("pass-intro").textContent = d.intro;
     $("pass-setlist").innerHTML = d.setlist.map(s => `<li><div><div class="t">${s.t}</div><h4>${s.h}</h4><p>${s.p}</p></div></li>`).join("");
-    $("pass-dress").textContent = d.dress;
+    $("pass-dress").innerHTML = d.dress.map(line => {
+      const i = line.indexOf(": ");
+      return i > 0 ? `<li><b>${esc(line.slice(0, i))}</b> ${esc(line.slice(i + 2))}</li>` : `<li>${esc(line)}</li>`;
+    }).join("");
+    $("pass-inspo").hidden = !d.inspo;
+    if (d.inspo) { $("pass-inspo").href = d.inspo.url; $("pass-inspo").textContent = d.inspo.label; }
     $("pass-prev").disabled = i === 0;
     $("pass-next").disabled = i === TOUR.length - 1;
     dlg.querySelector(".pass").scrollTop = 0;
@@ -904,7 +923,7 @@
   });
 
   /* ================= PACKING LIST (saved per device) ================= */
-  const PACK_KEY = "mrs-worldbride-packing";
+  const PACK_KEY = "mrs-worldbride-packing-v2"; // bump when the list changes so old checkmarks don't shift
   const boxes = [...document.querySelectorAll("#pack-list input")];
   let packed = [];
   try { packed = JSON.parse(localStorage.getItem(PACK_KEY)) || []; } catch (e) {}
